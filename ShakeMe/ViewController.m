@@ -53,14 +53,35 @@
 {
     if (motion == UIEventSubtypeMotionShake)
     {
-        [UIView animateWithDuration:1.0 animations:^{
-            CGRect frame = cover.frame;
-            int total = frame.origin.x + frame.size.width;
-            frame.origin.x = total;
-            frame.size.width = 0;
-            cover.frame = frame;
-        }];
+        [self showNextText];
+        
+        
     }
+}
+
+static int number = 0;
+
+- (NSString*) selectNextText
+{
+    number++;
+    return [NSString stringWithFormat:@"Blah - %d", number];
+    
+}
+- (void) showNextText
+{
+    [UIView animateWithDuration:1.0 animations:^{
+        dialog.text = @"";
+        cover.frame = dialog.frame;
+        dialog.text = [self selectNextText];
+        
+        CGRect frame = cover.frame;
+        int total = frame.origin.x + frame.size.width;
+        frame.origin.x = total;
+        frame.size.width = 0;
+        cover.frame = frame;
+    }];
+    
+    
 }
 
 -(BOOL)canBecomeFirstResponder {
@@ -79,7 +100,7 @@
 
 - (void) addDialogLabel
 {
-    dialog = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMidX(self.view.frame), CGRectGetMidY(self.view.frame) / 2, 45, 18)];
+    dialog = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMidX(self.view.frame), CGRectGetMidY(self.view.frame) / 2, 100, 18)];
     dialog.backgroundColor = [UIColor clearColor];
     dialog.text = @"hello";
     dialog.hidden = NO;
@@ -95,14 +116,7 @@
 {
     if (sender.state == UIGestureRecognizerStateEnded)
     {         // handling code
-        [UIView animateWithDuration:1.0 animations:^{
-            CGRect frame = cover.frame;
-            int total = frame.origin.x + frame.size.width;
-            frame.origin.x = total;
-            frame.size.width = 0;
-            cover.frame = frame;
-        }];
-        
+        [self showNextText];
     }
 }
 
