@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 
 #import "ViewController.h"
+#import <sqlite3.h>
 
 @implementation AppDelegate
 
@@ -16,6 +17,42 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    
+    sqlite3 *database;
+    NSString *dbPath =@"phrases.sqlite";
+    NSArray *documentsPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    
+    NSString *documentDir = [documentsPaths objectAtIndex:0];
+    
+    NSString *_databasePath = [documentDir stringByAppendingPathComponent:dbPath];
+    
+    int res = sqlite3_open_v2([_databasePath UTF8String], &database, SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE, NULL);
+
+    NSString *statement = @"CREATE TABLE PHRASES(id INTEGER PRIMARY KEY autoincrement, PHRASE TEXT, SENTIMENT INT)";
+    res = sqlite3_exec(database, [statement UTF8String], NULL, NULL, NULL);
+    res = sqlite3_exec(database, [@"INSERT INTO PHRASES VALUES(1,'Want to know?', 0)" UTF8String], NULL, NULL, NULL);
+    const char *bleh = sqlite3_errmsg(database);
+    res = sqlite3_exec(database, [@"INSERT INTO PHRASES VALUES(2,'Are you sure?', 0)" UTF8String], NULL, NULL, NULL);
+    res = sqlite3_exec(database, [@"INSERT INTO PHRASES VALUES(3,'Knowing is not for everyone you know?', 0)" UTF8String], NULL, NULL, NULL);
+        res = sqlite3_exec(database, [@"INSERT INTO PHRASES VALUES(4,'It may be too much for some?', 0)" UTF8String], NULL, NULL, NULL);
+            res = sqlite3_exec(database, [@"INSERT INTO PHRASES VALUES(5,'Are you strong enough?', 0)" UTF8String], NULL, NULL, NULL);
+            res = sqlite3_exec(database, [@"INSERT INTO PHRASES VALUES(6,'I&amp;m not sure you're strong enough', 0)" UTF8String], NULL, NULL, NULL);
+            res = sqlite3_exec(database, [@"INSERT INTO PHRASES VALUES(7,'Sure, you may think knowing the future will make you happy', 0)" UTF8String], NULL, NULL, NULL);
+            res = sqlite3_exec(database, [@"INSERT INTO PHRASES VALUES(8,'But sometimes knowing the future it is just sad', 0)" UTF8String], NULL, NULL, NULL);
+            res = sqlite3_exec(database, [@"INSERT INTO PHRASES VALUES(9,'And sometimes knowing what is coming makes you mad', 0)" UTF8String], NULL, NULL, NULL);
+           res = sqlite3_exec(database, [ @"INSERT INTO PHRASES VALUES(10,'Do you want your future to make you mad', 0)" UTF8String], NULL, NULL, NULL);
+            res = sqlite3_exec(database, [@"INSERT INTO PHRASES VALUES(11,'Isn&amp;t it more exciting not knowing', 0)" UTF8String], NULL, NULL, NULL);
+            res = sqlite3_exec(database, [@"INSERT INTO PHRASES VALUES(12,'See, I worry about what would happen if I told you', 0)" UTF8String], NULL, NULL, NULL);
+                res = sqlite3_exec(database, [@"INSERT INTO PHRASES VALUES(13,'Some people have gotten angry and thrown their ipad when I told them their future', 0)" UTF8String], NULL, NULL, NULL);
+                res = sqlite3_exec(database, [@"INSERT INTO PHRASES VALUES(14,'Are you an angry ipad thrower?', 0)" UTF8String], NULL, NULL, NULL);
+                res = sqlite3_exec(database, [@"INSERT INTO PHRASES VALUES(15,'The future is a very intense place, full of things that haven&amp;t happened yet', 0)" UTF8String], NULL, NULL, NULL);
+                res = sqlite3_exec(database, [@"INSERT INTO PHRASES VALUES(16,'Sometimes, the future happens, and then it is in the past', 0)" UTF8String], NULL, NULL, NULL);
+                res = sqlite3_exec(database, [@"INSERT INTO PHRASES VALUES(17,'The first letter in your future..... is F.', 0)" UTF8String], NULL, NULL, NULL);
+                res = sqlite3_exec(database, [@"INSERT INTO PHRASES VALUES(18,'Ok, ok, I&amp;ve messed with you enough, do you want to know your future for sure?', 0)" UTF8String], NULL, NULL, NULL);
+                res = sqlite3_exec(database, [@"INSERT INTO PHRASES VALUES(19,'Everything comes to pass, even the future. Why are you in such a hurry?', 0)" UTF8String], NULL, NULL, NULL);
+                res = sqlite3_exec(database, [@"INSERT INTO PHRASES VALUES(20,'If I tell you the future, and I&amp;m wrong, will you be mad?', 0)" UTF8String], NULL, NULL, NULL);
+
+    
     self.viewController = [[ViewController alloc] initWithNibName:@"ViewController" bundle:nil];
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];

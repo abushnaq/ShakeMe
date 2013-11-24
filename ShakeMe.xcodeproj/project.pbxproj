@@ -19,6 +19,8 @@
 		930B1A851826B8AB00223730 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 930B1A841826B8AB00223730 /* ViewController.m */; };
 		930B1A881826B8AB00223730 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 930B1A861826B8AB00223730 /* ViewController.xib */; };
 		933BD8FB182E71D70061A5C4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 933BD8FA182E71D70061A5C4 /* QuartzCore.framework */; };
+		933BD8FE183024A60061A5C4 /* Phrases and schema.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 933BD8FD183024A60061A5C4 /* Phrases and schema.rtf */; };
+		9347FABA1839330400ADF06F /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9347FAB91839330400ADF06F /* libsqlite3.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +41,8 @@
 		930B1A841826B8AB00223730 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		930B1A871826B8AB00223730 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
 		933BD8FA182E71D70061A5C4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		933BD8FD183024A60061A5C4 /* Phrases and schema.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = "Phrases and schema.rtf"; sourceTree = "<group>"; };
+		9347FAB91839330400ADF06F /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9347FABA1839330400ADF06F /* libsqlite3.dylib in Frameworks */,
 				933BD8FB182E71D70061A5C4 /* QuartzCore.framework in Frameworks */,
 				930B1A6C1826B8AB00223730 /* UIKit.framework in Frameworks */,
 				930B1A6E1826B8AB00223730 /* Foundation.framework in Frameworks */,
@@ -77,6 +82,7 @@
 		930B1A6A1826B8AB00223730 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9347FAB91839330400ADF06F /* libsqlite3.dylib */,
 				930B1A6B1826B8AB00223730 /* UIKit.framework */,
 				930B1A6D1826B8AB00223730 /* Foundation.framework */,
 				930B1A6F1826B8AB00223730 /* CoreGraphics.framework */,
@@ -93,6 +99,7 @@
 				930B1A841826B8AB00223730 /* ViewController.m */,
 				930B1A861826B8AB00223730 /* ViewController.xib */,
 				930B1A721826B8AB00223730 /* Supporting Files */,
+				933BD8FD183024A60061A5C4 /* Phrases and schema.rtf */,
 			);
 			path = ShakeMe;
 			sourceTree = "<group>";
@@ -167,6 +174,7 @@
 				930B1A801826B8AB00223730 /* Default@2x.png in Resources */,
 				930B1A821826B8AB00223730 /* Default-568h@2x.png in Resources */,
 				930B1A881826B8AB00223730 /* ViewController.xib in Resources */,
+				933BD8FE183024A60061A5C4 /* Phrases and schema.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

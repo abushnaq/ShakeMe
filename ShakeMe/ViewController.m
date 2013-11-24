@@ -10,6 +10,7 @@
 #import <QuartzCore/CAShapeLayer.h>
 #import <QuartzCore/CAAnimation.h>
 #import <QuartzCore/CAMediaTimingFunction.h>
+#import <sqlite3.h>
 @interface ViewController ()
 
 @end
@@ -29,12 +30,12 @@
                                 CGRectGetMidY(self.view.frame)-radius);
     [self drawCircleAtCoordinates:secondEye filled:NO withRadius:30];
     
-    CGPoint thirdEye = CGPointMake(CGRectGetMidX(self.view.frame)+radius,
-                                    CGRectGetMidY(self.view.frame)-radius);
+    CGPoint thirdEye = CGPointMake(CGRectGetMidX(self.view.frame)+radius+20,
+                                    CGRectGetMidY(self.view.frame)+(radius-20));
     [self drawCircleAtCoordinates:thirdEye filled:YES withRadius:10];
     
-    CGPoint fourthEye = CGPointMake(CGRectGetMidX(self.view.frame)+radius,
-                                   CGRectGetMidY(self.view.frame)-radius);
+    CGPoint fourthEye = CGPointMake(CGRectGetMidX(self.view.frame)-radius+20,
+                                   CGRectGetMidY(self.view.frame)+(radius-20));
     [self drawCircleAtCoordinates:fourthEye filled:YES withRadius:10];
     
     
@@ -63,8 +64,28 @@ static int number = 0;
 
 - (NSString*) selectNextText
 {
-    number++;
-    return [NSString stringWithFormat:@"Blah - %d", number];
+    number = arc4random() % 20;
+    sqlite3 *database;
+    NSString *dbPath =@"phrases.sqlite";
+    NSArray *documentsPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    
+    NSString *documentDir = [documentsPaths objectAtIndex:0];
+    
+    NSString *_databasePath = [documentDir stringByAppendingPathComponent:dbPath];
+    
+    int res = sqlite3_open_v2([_databasePath UTF8String], &database, SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE, NULL);
+    
+    NSString *statement = [NSString stringWithFormat:@"SELECT PHRASE FROM PHRASES WHERE ID=%d", number];
+    
+    sqlite3_stmt *sqliteStatement;
+    res = sqlite3_prepare(database, [statement UTF8String], strlen([statement UTF8String]), &sqliteStatement, NULL);
+
+//    res = sqlite3_bind_int(sqliteStatement, 0, number);
+//    const char *blah = sqlite3_errmsg(database);
+    res = sqlite3_step(sqliteStatement);
+    const unsigned char *phrase = sqlite3_column_text(sqliteStatement, 0);
+    
+    return [[NSString alloc] initWithUTF8String:(const char*)phrase];//  [NSString stringWithFormat:@"Blah - %d", number];
     
 }
 - (void) showNextText
@@ -102,7 +123,7 @@ static int number = 0;
 {
     dialog = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMidX(self.view.frame), CGRectGetMidY(self.view.frame) / 2, 100, 18)];
     dialog.backgroundColor = [UIColor clearColor];
-    dialog.text = @"hello";
+    dialog.text = @"";
     dialog.hidden = NO;
     
     cover = [[UIView alloc] initWithFrame:dialog.frame];
@@ -154,6 +175,7 @@ static int number = 0;
     drawAnimation.duration            = 1.0; // "animate over 1 seconds or so.."
     drawAnimation.repeatCount         = 1.0;  // Animate only once..
     drawAnimation.removedOnCompletion = NO;   // Remain stroked after the animation..
+
     
     // Animate from no part of the stroke being drawn to the entire stroke being drawn
     drawAnimation.fromValue = [NSNumber numberWithFloat:0.0f];
