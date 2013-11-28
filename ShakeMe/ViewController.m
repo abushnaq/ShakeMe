@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "MouthView.h"
 #import <QuartzCore/CAShapeLayer.h>
 #import <QuartzCore/CAAnimation.h>
 #import <QuartzCore/CAMediaTimingFunction.h>
@@ -38,7 +39,7 @@
                                    CGRectGetMidY(self.view.frame)+(radius-20));
     [self drawCircleAtCoordinates:fourthEye filled:YES withRadius:10];
     
-    
+    [self addMouthLayer];
     
     UITapGestureRecognizer *trigger = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
     trigger.numberOfTapsRequired = 1;
@@ -55,8 +56,6 @@
     if (motion == UIEventSubtypeMotionShake)
     {
         [self showNextText];
-        
-        
     }
 }
 
@@ -187,6 +186,24 @@ static int number = 0;
     // Add the animation to the circle
     [circle addAnimation:drawAnimation forKey:@"drawCircleAnimation"];
 
+}
+
+- (void) addMouthLayer
+{
+
+    [self.view addSubview:[[MouthView alloc] initWithFrame:CGRectMake(CGRectGetMidX(self.view.frame)-40,CGRectGetMidY(self.view.frame)+40, 150, 150)]];
+
+//    arc.path = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(30, 150, 30, 30)
+//                                          cornerRadius:15].CGPath;
+    //[UIBezierPath bezierPathWithArcCenter:CGPointMake(30, 300) radius:30 startAngle:0 endAngle:600 clockwise:NO].CGPath;
+//    arc.position = CGPointMake(30, 300);
+//    arc.fillColor = [UIColor clearColor].CGColor;
+//    arc.fillColor = [UIColor clearColor].CGColor;
+//    arc.strokeColor = [UIColor blackColor].CGColor;
+//    arc.lineWidth = 5;
+    
+    // Add to parent layer
+//    [self.view.layer addSublayer:arc];
 }
 
 - (void)didReceiveMemoryWarning
