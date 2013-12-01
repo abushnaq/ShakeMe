@@ -15,6 +15,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        self.opaque = NO;
     }
     return self;
 }
@@ -47,8 +48,8 @@
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
     imageView.opaque =  NO;
     self.opaque = NO;
-    imageView.backgroundColor = [UIColor whiteColor];
-    self.backgroundColor = [UIColor greenColor];
+   // imageView.backgroundColor = [UIColor whiteColor];
+  //  self.backgroundColor = [UIColor greenColor];
     [self addSubview:imageView];
     // Drawing code
     

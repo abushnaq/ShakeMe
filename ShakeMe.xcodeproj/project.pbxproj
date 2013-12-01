@@ -18,6 +18,7 @@
 		930B1A821826B8AB00223730 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 930B1A811826B8AB00223730 /* Default-568h@2x.png */; };
 		930B1A851826B8AB00223730 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 930B1A841826B8AB00223730 /* ViewController.m */; };
 		930B1A881826B8AB00223730 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 930B1A861826B8AB00223730 /* ViewController.xib */; };
+		932FC9E21847C86E00FE7E4F /* EyelidView.m in Sources */ = {isa = PBXBuildFile; fileRef = 932FC9E11847C86E00FE7E4F /* EyelidView.m */; };
 		932FF10818429C3300839FD9 /* MouthView.m in Sources */ = {isa = PBXBuildFile; fileRef = 932FF10718429C3300839FD9 /* MouthView.m */; };
 		933BD8FB182E71D70061A5C4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 933BD8FA182E71D70061A5C4 /* QuartzCore.framework */; };
 		933BD8FE183024A60061A5C4 /* Phrases and schema.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 933BD8FD183024A60061A5C4 /* Phrases and schema.rtf */; };
@@ -41,6 +42,8 @@
 		930B1A831826B8AB00223730 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		930B1A841826B8AB00223730 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		930B1A871826B8AB00223730 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
+		932FC9E01847C86E00FE7E4F /* EyelidView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EyelidView.h; sourceTree = "<group>"; };
+		932FC9E11847C86E00FE7E4F /* EyelidView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EyelidView.m; sourceTree = "<group>"; };
 		932FF10618429C3300839FD9 /* MouthView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouthView.h; sourceTree = "<group>"; };
 		932FF10718429C3300839FD9 /* MouthView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MouthView.m; sourceTree = "<group>"; };
 		933BD8FA182E71D70061A5C4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -105,6 +108,8 @@
 				933BD8FD183024A60061A5C4 /* Phrases and schema.rtf */,
 				932FF10618429C3300839FD9 /* MouthView.h */,
 				932FF10718429C3300839FD9 /* MouthView.m */,
+				932FC9E01847C86E00FE7E4F /* EyelidView.h */,
+				932FC9E11847C86E00FE7E4F /* EyelidView.m */,
 			);
 			path = ShakeMe;
 			sourceTree = "<group>";
@@ -194,6 +199,7 @@
 				930B1A7C1826B8AB00223730 /* AppDelegate.m in Sources */,
 				932FF10818429C3300839FD9 /* MouthView.m in Sources */,
 				930B1A851826B8AB00223730 /* ViewController.m in Sources */,
+				932FC9E21847C86E00FE7E4F /* EyelidView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

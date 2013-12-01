@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "MouthView.h"
+#import "EyelidView.h"
 #import <QuartzCore/CAShapeLayer.h>
 #import <QuartzCore/CAAnimation.h>
 #import <QuartzCore/CAMediaTimingFunction.h>
@@ -27,6 +28,8 @@
               CGRectGetMidY(self.view.frame)-radius);
     [self drawCircleAtCoordinates:firstEye filled:NO withRadius:30];
     
+   [self addEyelid:firstEye];
+    
     CGPoint secondEye = CGPointMake(CGRectGetMidX(self.view.frame)+radius,
                                 CGRectGetMidY(self.view.frame)-radius);
     [self drawCircleAtCoordinates:secondEye filled:NO withRadius:30];
@@ -41,6 +44,8 @@
     
     [self addMouthLayer];
     
+    
+    
     UITapGestureRecognizer *trigger = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
     trigger.numberOfTapsRequired = 1;
     trigger.numberOfTouchesRequired = 1;
@@ -50,6 +55,46 @@
     [self addDialogLabel];
 }
 
+- (void) addEyelid:(CGPoint) coordinate
+{
+    EyelidView *eyelid = [[EyelidView alloc] initWithFrame:CGRectMake(coordinate.x, coordinate.y+15, 60, 100)];
+    [self.view addSubview:eyelid];
+  
+//    [UIView animateWithDuration:100.0f animations:^{
+//        eyelid.frame = CGRectMake(coordinate.x, coordinate.y+15, 60, 200);
+//    }];
+    
+//    // The keyPath to animate
+//    NSString *keyPath = @"transform.scale.y";//@"bounds.size.height";//@"transform.translation.y";
+//    
+//    // Allocate a CAKeyFrameAnimation for the specified keyPath.
+//    CAKeyframeAnimation *translation = [CAKeyframeAnimation animationWithKeyPath:keyPath];
+//    
+//    // Set animation duration and repeat
+//    translation.duration = 1.5f;
+//    translation.repeatCount = HUGE_VAL;
+//
+//    // Allocate array to hold the values to interpolate
+//    NSMutableArray *values = [[NSMutableArray alloc] init];
+//    
+//    // Add the start value
+//    // The animation starts at a y offset of 0.0
+//    [values addObject:[NSNumber numberWithFloat:100.0f]];
+//    
+//    CALayer *layer = eyelid.layer;
+//    // Add the end value
+//    // The animation finishes when the ball would contact the bottom of the screen
+//    // This point is calculated by finding the height of the applicationFrame
+//    // and subtracting the height of the ball.
+//    CGFloat height = 0.0f;//[[UIScreen mainScreen] applicationFrame].size.height - layer.frame.size.height;
+//    [values addObject:[NSNumber numberWithFloat:height]];
+//    
+//    // Set the values that should be interpolated during the animation
+//    translation.values = values;
+//    
+//    [layer addAnimation:translation forKey:keyPath];
+ 
+}
 
 - (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event
 {
@@ -79,8 +124,6 @@ static int number = 0;
     sqlite3_stmt *sqliteStatement;
     res = sqlite3_prepare(database, [statement UTF8String], strlen([statement UTF8String]), &sqliteStatement, NULL);
 
-//    res = sqlite3_bind_int(sqliteStatement, 0, number);
-//    const char *blah = sqlite3_errmsg(database);
     res = sqlite3_step(sqliteStatement);
     const unsigned char *phrase = sqlite3_column_text(sqliteStatement, 0);
     
@@ -147,10 +190,7 @@ static int number = 0;
     // Make a circular shape
     circle.path = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, 2.0*radius, 2.0*radius)
                                              cornerRadius:radius].CGPath;
-//
 
-    
-//    circle.path = [UIBezierPath bezierPathWithArcCenter:CGPointMake(30, 30) radius:30 startAngle:0 endAngle:600 clockwise:NO].CGPath;
 //    // Center the shape in self.view
     circle.position = point;
     
@@ -193,17 +233,6 @@ static int number = 0;
 
     [self.view addSubview:[[MouthView alloc] initWithFrame:CGRectMake(CGRectGetMidX(self.view.frame)-40,CGRectGetMidY(self.view.frame)+40, 150, 150)]];
 
-//    arc.path = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(30, 150, 30, 30)
-//                                          cornerRadius:15].CGPath;
-    //[UIBezierPath bezierPathWithArcCenter:CGPointMake(30, 300) radius:30 startAngle:0 endAngle:600 clockwise:NO].CGPath;
-//    arc.position = CGPointMake(30, 300);
-//    arc.fillColor = [UIColor clearColor].CGColor;
-//    arc.fillColor = [UIColor clearColor].CGColor;
-//    arc.strokeColor = [UIColor blackColor].CGColor;
-//    arc.lineWidth = 5;
-    
-    // Add to parent layer
-//    [self.view.layer addSublayer:arc];
 }
 
 - (void)didReceiveMemoryWarning
