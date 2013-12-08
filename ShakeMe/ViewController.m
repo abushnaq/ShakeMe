@@ -163,9 +163,11 @@ static int number = 0;
 
 - (void) addDialogLabel
 {
-    dialog = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMidX(self.view.frame), CGRectGetMidY(self.view.frame) / 2, 100, 18)];
+    dialog = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMidX(self.view.frame)/2, CGRectGetMidY(self.view.frame) / 2, 300, 100)];
     dialog.backgroundColor = [UIColor clearColor];
     dialog.text = @"";
+    dialog.numberOfLines = 0;
+    dialog.lineBreakMode = NSLineBreakByWordWrapping;
     dialog.hidden = NO;
     
     cover = [[UIView alloc] initWithFrame:dialog.frame];

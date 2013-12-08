@@ -26,19 +26,27 @@
 {
     CAShapeLayer *circle = [CAShapeLayer layer];
     // Make a circular shape
-    CGPathRef eyeclosed = [UIBezierPath bezierPathWithArcCenter:CGPointMake(30, 30) radius:30 startAngle:0 endAngle:3.25 clockwise:YES].CGPath;
+//    CGPathRef eyeclosed = [UIBezierPath bezierPathWithArcCenter:CGPointMake(30, 30) radius:30 startAngle:0 endAngle:3.25 clockwise:YES].CGPath;
 
-    UIBezierPath *path = [UIBezierPath bezierPath];
+    UIBezierPath *eyeclosed = [UIBezierPath bezierPath];
+    [eyeclosed moveToPoint:CGPointMake(60, 30)];
     
-//    [path addCurveToPoint:CGPointMake(0, 30) controlPoint1:CGPointMake(30, 30) controlPoint2:CGPointMake(15, 15)];
+    [eyeclosed addCurveToPoint:CGPointMake(0, 30) controlPoint1:CGPointMake(35, 70) controlPoint2:CGPointMake(20, 70)];
+    
+   
+    UIBezierPath *eyeopen = [UIBezierPath bezierPath];
+    [eyeopen moveToPoint:CGPointMake(60, 30)];
+    
+    [eyeopen addCurveToPoint:CGPointMake(0, 30) controlPoint1:CGPointMake(35, 30) controlPoint2:CGPointMake(20, 30)];
+    
+    
     
 
-    [path moveToPoint:CGPointMake(60, 30)];
-    [path addLineToPoint:CGPointMake(0, 30)];
-    //[path stroke];
+//    [path addLineToPoint:CGPointMake(0, 30)];
+   // [path stroke];
     
-    CGPathRef eyeOpen = path.CGPath;//[UIBezierPath bezierPathWithArcCenter:CGPointMake(30, 30) radius:0 startAngle:0 endAngle:3.25 clockwise:YES].CGPath;//[UIBezierPath bezierPathWithRect:CGRectMake(0, 30, 60, 1)].CGPath;
-    circle.path = eyeclosed;
+    CGPathRef eyeOpen = eyeopen.CGPath;//[UIBezierPath bezierPathWithArcCenter:CGPointMake(30, 30) radius:0 startAngle:0 endAngle:3.25 clockwise:YES].CGPath;//[UIBezierPath bezierPathWithRect:CGRectMake(0, 30, 60, 1)].CGPath;
+    circle.path = eyeclosed.CGPath;
     //    // Center the shape in self.view
     circle.position = CGPointMake(30, 30);
     
@@ -75,7 +83,7 @@
     blink.repeatCount = HUGE_VAL;
     blink.autoreverses = YES;
     blink.removedOnCompletion = NO;
-    blink.fromValue = (__bridge id)eyeclosed;
+    blink.fromValue = (__bridge id)eyeclosed.CGPath;
     blink.toValue = (__bridge id)eyeOpen;
     
     
