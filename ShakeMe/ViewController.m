@@ -28,7 +28,7 @@
               CGRectGetMidY(self.view.frame)-radius);
     [self drawCircleAtCoordinates:firstEye filled:NO withRadius:30];
     
-   [self addEyelid:firstEye];
+
     
     CGPoint secondEye = CGPointMake(CGRectGetMidX(self.view.frame)+radius,
                                 CGRectGetMidY(self.view.frame)-radius);
@@ -44,8 +44,8 @@
     
     [self addMouthLayer];
     
-    
-    
+   [self addEyelid:firstEye];    
+   [self addEyelid:secondEye];
     UITapGestureRecognizer *trigger = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
     trigger.numberOfTapsRequired = 1;
     trigger.numberOfTouchesRequired = 1;
@@ -57,7 +57,7 @@
 
 - (void) addEyelid:(CGPoint) coordinate
 {
-    EyelidView *eyelid = [[EyelidView alloc] initWithFrame:CGRectMake(coordinate.x, coordinate.y+15, 60, 100)];
+    EyelidView *eyelid = [[EyelidView alloc] initWithFrame:CGRectMake(coordinate.x-30, coordinate.y-30, 60, 100)];
     [self.view addSubview:eyelid];
   
 //    [UIView animateWithDuration:100.0f animations:^{
