@@ -105,10 +105,43 @@
 }
 
 static int number = 0;
+static int segment = -1;
+static int phraseCount = 0;
 
 - (NSString*) selectNextText
 {
-    number = arc4random() % 20;
+    if (phraseCount > 4 || segment == -1)
+    {
+        segment = random() % 4;
+        phraseCount = 0;
+    }
+    
+    if (segment == 0)
+        segment = 1;
+    
+    if (segment == 1)
+    {
+        number = arc4random() % 6;
+        if (number == 0)
+            number = 1;
+    }
+    else if (segment == 2)
+    {
+        number = (arc4random() % 6);
+        if (number == 0)
+            number = 1;
+        number += 6;
+    }
+    else if (segment == 3)
+    {
+        number = (arc4random() % 6);
+        if (number == 0)
+            number = 1;
+        number += 12;
+    }
+    phraseCount++;
+    
+    NSLog(@"Segment: %d number %d phraseCount %d", segment, number, phraseCount);
     sqlite3 *database;
     NSString *dbPath =@"phrases.sqlite";
     NSArray *documentsPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -119,7 +152,12 @@ static int number = 0;
     
     int res = sqlite3_open_v2([_databasePath UTF8String], &database, SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE, NULL);
     
-    NSString *statement = [NSString stringWithFormat:@"SELECT PHRASE FROM PHRASES WHERE ID=%d", number];
+    if (segment == -1)
+        segment = random() % 4;
+    if (segment == 0)
+        segment = 1;
+    
+    NSString *statement = [NSString stringWithFormat:@"SELECT PHRASE FROM PHRASES WHERE ID=%d and SEQUENCE=%d", number, segment];
     
     sqlite3_stmt *sqliteStatement;
     res = sqlite3_prepare(database, [statement UTF8String], strlen([statement UTF8String]), &sqliteStatement, NULL);

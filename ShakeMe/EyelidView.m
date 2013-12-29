@@ -52,8 +52,9 @@
     
     // Configure the apperence of the circle
 
-    //    circle.fillColor = [UIColor blueColor].CGColor;
-    circle.strokeColor = [UIColor blackColor].CGColor;
+        circle.fillColor = [UIColor colorWithRed:100 green:255 blue:100 alpha:0.9].CGColor;
+//    circle.fillColor = [UIColor colorWithRed:30 green:133 blue:192 alpha:1.0f].CGColor;//[UIColor blackColor].CGColor;
+//        circle.strokeColor = [UIColor colorWithRed:30 green:133 blue:192 alpha:1.0f].CGColor;//[UIColor blackColor].CGColor;
     circle.opacity=1.0f;
     circle.lineWidth = 5;
     
