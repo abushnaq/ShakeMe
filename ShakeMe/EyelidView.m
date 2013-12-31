@@ -24,37 +24,38 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
+   // return;
+    int width = rect.size.width / 2;
+    int height = rect.size.height / 2.25;
     CAShapeLayer *circle = [CAShapeLayer layer];
-    // Make a circular shape
-//    CGPathRef eyeclosed = [UIBezierPath bezierPathWithArcCenter:CGPointMake(30, 30) radius:30 startAngle:0 endAngle:3.25 clockwise:YES].CGPath;
 
     UIBezierPath *eyeclosed = [UIBezierPath bezierPath];
-    [eyeclosed moveToPoint:CGPointMake(60, 30)];
+    [eyeclosed moveToPoint:CGPointMake(10, height)];
+    [eyeclosed addQuadCurveToPoint:CGPointMake(rect.size.width+10, height) controlPoint:CGPointMake(10+rect.size.width/2, rect.size.height+10)];
     
-    [eyeclosed addCurveToPoint:CGPointMake(0, 30) controlPoint1:CGPointMake(35, 70) controlPoint2:CGPointMake(20, 70)];
-    
+//    [eyeclosed moveToPoint:CGPointMake(50, width)];
+//    
+//    [eyeclosed addCurveToPoint:CGPointMake(5, width) controlPoint1:CGPointMake(0, 60) controlPoint2:CGPointMake(80, 60)];
+//    
    
     UIBezierPath *eyeopen = [UIBezierPath bezierPath];
-    [eyeopen moveToPoint:CGPointMake(60, 30)];
+    [eyeopen moveToPoint:CGPointMake(10, height)];
     
-    [eyeopen addCurveToPoint:CGPointMake(0, 30) controlPoint1:CGPointMake(35, 30) controlPoint2:CGPointMake(20, 30)];
+//    [eyeopen moveToPoint:CGPointMake(60, width)];
+    [eyeopen addQuadCurveToPoint:CGPointMake(rect.size.width+10, height) controlPoint:CGPointMake(width, height)];
+//    [eyeopen addCurveToPoint:CGPointMake(0, width) controlPoint1:CGPointMake(35, width) controlPoint2:CGPointMake(20, width)];
+    
+    
+    CGPathRef eyeOpen = eyeopen.CGPath;
     
     
     
-
-//    [path addLineToPoint:CGPointMake(0, 30)];
-   // [path stroke];
-    
-    CGPathRef eyeOpen = eyeopen.CGPath;//[UIBezierPath bezierPathWithArcCenter:CGPointMake(30, 30) radius:0 startAngle:0 endAngle:3.25 clockwise:YES].CGPath;//[UIBezierPath bezierPathWithRect:CGRectMake(0, 30, 60, 1)].CGPath;
     circle.path = eyeclosed.CGPath;
-    //    // Center the shape in self.view
     circle.position = CGPointMake(30, 30);
     
     // Configure the apperence of the circle
 
-        circle.fillColor = [UIColor colorWithRed:100 green:255 blue:100 alpha:0.9].CGColor;
-//    circle.fillColor = [UIColor colorWithRed:30 green:133 blue:192 alpha:1.0f].CGColor;//[UIColor blackColor].CGColor;
-//        circle.strokeColor = [UIColor colorWithRed:30 green:133 blue:192 alpha:1.0f].CGColor;//[UIColor blackColor].CGColor;
+    circle.fillColor = [UIColor colorWithRed:100 green:255 blue:100 alpha:0.9].CGColor;
     circle.opacity=1.0f;
     circle.lineWidth = 5;
     

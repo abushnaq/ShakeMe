@@ -19,33 +19,37 @@
 
 @implementation ViewController
 
+static int radius = 20;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    int radius = 30;
+//    self.view.backgroundColor = [UIColor greenColor];
 	// Do any additional setup after loading the view, typically from a nib.
-    CGPoint firstEye = CGPointMake(CGRectGetMidX(self.view.frame)-radius,
+    CGPoint firstEye = CGPointMake(CGRectGetMidX(self.view.frame)-2.5*radius,
               CGRectGetMidY(self.view.frame)-radius);
-    [self drawCircleAtCoordinates:firstEye filled:NO withRadius:30];
+    [self drawCircleAtCoordinates:firstEye filled:NO withRadius:radius];
     
 
     
-    CGPoint secondEye = CGPointMake(CGRectGetMidX(self.view.frame)+radius,
+    CGPoint secondEye = CGPointMake(CGRectGetMidX(self.view.frame)+0.5*radius,
                                 CGRectGetMidY(self.view.frame)-radius);
-    [self drawCircleAtCoordinates:secondEye filled:NO withRadius:30];
+    [self drawCircleAtCoordinates:secondEye filled:NO withRadius:radius];
     
-    CGPoint thirdEye = CGPointMake(CGRectGetMidX(self.view.frame)+radius+20,
-                                    CGRectGetMidY(self.view.frame)+(radius-20));
-    [self drawCircleAtCoordinates:thirdEye filled:YES withRadius:10];
+
     
-    CGPoint fourthEye = CGPointMake(CGRectGetMidX(self.view.frame)-radius+20,
-                                   CGRectGetMidY(self.view.frame)+(radius-20));
-    [self drawCircleAtCoordinates:fourthEye filled:YES withRadius:10];
+    
+    CGPoint thirdEye = CGPointMake(CGRectGetMidX(self.view.frame)+0.5*radius+15,
+                                    CGRectGetMidY(self.view.frame)+(radius-5));
+    [self drawCircleAtCoordinates:thirdEye filled:YES withRadius:radius/3];
+    
+    CGPoint fourthEye = CGPointMake(CGRectGetMidX(self.view.frame)-2.5*radius+15,
+                                   CGRectGetMidY(self.view.frame)+(radius-5));
+    [self drawCircleAtCoordinates:fourthEye filled:YES withRadius:radius/3];
     
     [self addMouthLayer];
     
-   [self addEyelid:firstEye];    
-   [self addEyelid:secondEye];
+    [self addEyelid:firstEye];
+    [self addEyelid:secondEye];
     UITapGestureRecognizer *trigger = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
     trigger.numberOfTapsRequired = 1;
     trigger.numberOfTouchesRequired = 1;
@@ -57,43 +61,8 @@
 
 - (void) addEyelid:(CGPoint) coordinate
 {
-    EyelidView *eyelid = [[EyelidView alloc] initWithFrame:CGRectMake(coordinate.x-30, coordinate.y-30, 60, 100)];
+    EyelidView *eyelid = [[EyelidView alloc] initWithFrame:CGRectMake(coordinate.x-2*radius, coordinate.y-radius, radius*2, radius*2.5)];
     [self.view addSubview:eyelid];
-  
-//    [UIView animateWithDuration:100.0f animations:^{
-//        eyelid.frame = CGRectMake(coordinate.x, coordinate.y+15, 60, 200);
-//    }];
-    
-//    // The keyPath to animate
-//    NSString *keyPath = @"transform.scale.y";//@"bounds.size.height";//@"transform.translation.y";
-//    
-//    // Allocate a CAKeyFrameAnimation for the specified keyPath.
-//    CAKeyframeAnimation *translation = [CAKeyframeAnimation animationWithKeyPath:keyPath];
-//    
-//    // Set animation duration and repeat
-//    translation.duration = 1.5f;
-//    translation.repeatCount = HUGE_VAL;
-//
-//    // Allocate array to hold the values to interpolate
-//    NSMutableArray *values = [[NSMutableArray alloc] init];
-//    
-//    // Add the start value
-//    // The animation starts at a y offset of 0.0
-//    [values addObject:[NSNumber numberWithFloat:100.0f]];
-//    
-//    CALayer *layer = eyelid.layer;
-//    // Add the end value
-//    // The animation finishes when the ball would contact the bottom of the screen
-//    // This point is calculated by finding the height of the applicationFrame
-//    // and subtracting the height of the ball.
-//    CGFloat height = 0.0f;//[[UIScreen mainScreen] applicationFrame].size.height - layer.frame.size.height;
-//    [values addObject:[NSNumber numberWithFloat:height]];
-//    
-//    // Set the values that should be interpolated during the animation
-//    translation.values = values;
-//    
-//    [layer addAnimation:translation forKey:keyPath];
- 
 }
 
 - (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event
@@ -105,43 +74,15 @@
 }
 
 static int number = 0;
-static int segment = -1;
-static int phraseCount = 0;
 
 - (NSString*) selectNextText
 {
-    if (phraseCount > 4 || segment == -1)
+    number = arc4random() % 40;
+    if (number ==0)
     {
-        segment = random() % 4;
-        phraseCount = 0;
+        number = 1;
     }
-    
-    if (segment == 0)
-        segment = 1;
-    
-    if (segment == 1)
-    {
-        number = arc4random() % 6;
-        if (number == 0)
-            number = 1;
-    }
-    else if (segment == 2)
-    {
-        number = (arc4random() % 6);
-        if (number == 0)
-            number = 1;
-        number += 6;
-    }
-    else if (segment == 3)
-    {
-        number = (arc4random() % 6);
-        if (number == 0)
-            number = 1;
-        number += 12;
-    }
-    phraseCount++;
-    
-    NSLog(@"Segment: %d number %d phraseCount %d", segment, number, phraseCount);
+   // NSLog(@"Segment: %d number %d phraseCount %d", segment, number, phraseCount);
     sqlite3 *database;
     NSString *dbPath =@"phrases.sqlite";
     NSArray *documentsPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -151,13 +92,9 @@ static int phraseCount = 0;
     NSString *_databasePath = [documentDir stringByAppendingPathComponent:dbPath];
     
     int res = sqlite3_open_v2([_databasePath UTF8String], &database, SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE, NULL);
+    NSLog (@"Number is %d", number);
     
-    if (segment == -1)
-        segment = random() % 4;
-    if (segment == 0)
-        segment = 1;
-    
-    NSString *statement = [NSString stringWithFormat:@"SELECT PHRASE FROM PHRASES WHERE ID=%d and SEQUENCE=%d", number, segment];
+    NSString *statement = [NSString stringWithFormat:@"SELECT PHRASE FROM PHRASES WHERE ID=%d" , number];
     
     sqlite3_stmt *sqliteStatement;
     res = sqlite3_prepare(database, [statement UTF8String], strlen([statement UTF8String]), &sqliteStatement, NULL);
@@ -201,8 +138,9 @@ static int phraseCount = 0;
 
 - (void) addDialogLabel
 {
-    dialog = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMidX(self.view.frame)/2, CGRectGetMidY(self.view.frame) / 2, 300, 100)];
+    dialog = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 300, 100)];
     dialog.backgroundColor = [UIColor clearColor];
+    dialog.font = [UIFont systemFontOfSize:15.0f];
     dialog.text = @"";
     dialog.numberOfLines = 0;
     dialog.lineBreakMode = NSLineBreakByWordWrapping;
@@ -228,7 +166,7 @@ static int phraseCount = 0;
 
     CAShapeLayer *circle = [CAShapeLayer layer];
     // Make a circular shape
-    circle.path = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, 2.0*radius, 2.0*radius)
+    circle.path = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, 2.0*radius, 2.5*radius)
                                              cornerRadius:radius].CGPath;
 
 //    // Center the shape in self.view
@@ -270,8 +208,7 @@ static int phraseCount = 0;
 
 - (void) addMouthLayer
 {
-
-    [self.view addSubview:[[MouthView alloc] initWithFrame:CGRectMake(CGRectGetMidX(self.view.frame)-40,CGRectGetMidY(self.view.frame)+40, 150, 150)]];
+    [self.view addSubview:[[MouthView alloc] initWithFrame:CGRectMake(100,CGRectGetMidY(self.view.frame)+60, 120, 150)]];
 
 }
 
