@@ -30,22 +30,13 @@
     CAShapeLayer *circle = [CAShapeLayer layer];
 
     UIBezierPath *eyeclosed = [UIBezierPath bezierPath];
-    [eyeclosed moveToPoint:CGPointMake(10, height)];
-    [eyeclosed addQuadCurveToPoint:CGPointMake(rect.size.width+10, height) controlPoint:CGPointMake(10+rect.size.width/2, rect.size.height+10)];
-    
-//    [eyeclosed moveToPoint:CGPointMake(50, width)];
-//    
-//    [eyeclosed addCurveToPoint:CGPointMake(5, width) controlPoint1:CGPointMake(0, 60) controlPoint2:CGPointMake(80, 60)];
-//    
+    [eyeclosed moveToPoint:CGPointMake(15, height)];
+    [eyeclosed addQuadCurveToPoint:CGPointMake(rect.size.width+5, height) controlPoint:CGPointMake(12+rect.size.width/2, rect.size.height+5)];
    
     UIBezierPath *eyeopen = [UIBezierPath bezierPath];
     [eyeopen moveToPoint:CGPointMake(10, height)];
     
-//    [eyeopen moveToPoint:CGPointMake(60, width)];
     [eyeopen addQuadCurveToPoint:CGPointMake(rect.size.width+10, height) controlPoint:CGPointMake(width, height)];
-//    [eyeopen addCurveToPoint:CGPointMake(0, width) controlPoint1:CGPointMake(35, width) controlPoint2:CGPointMake(20, width)];
-    
-    
     CGPathRef eyeOpen = eyeopen.CGPath;
     
     
