@@ -23,7 +23,6 @@ static int radius = 20;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    self.view.backgroundColor = [UIColor greenColor];
 	// Do any additional setup after loading the view, typically from a nib.
     CGPoint firstEye = CGPointMake(CGRectGetMidX(self.view.frame)-2.5*radius,
               CGRectGetMidY(self.view.frame)-radius);
@@ -92,7 +91,6 @@ static int number = 0;
     NSString *_databasePath = [documentDir stringByAppendingPathComponent:dbPath];
     
     int res = sqlite3_open_v2([_databasePath UTF8String], &database, SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE, NULL);
-    NSLog (@"Number is %d", number);
     
     NSString *statement = [NSString stringWithFormat:@"SELECT PHRASE FROM PHRASES WHERE ID=%d" , number];
     
@@ -102,9 +100,9 @@ static int number = 0;
     res = sqlite3_step(sqliteStatement);
     const unsigned char *phrase = sqlite3_column_text(sqliteStatement, 0);
     
-    return [[NSString alloc] initWithUTF8String:(const char*)phrase];//  [NSString stringWithFormat:@"Blah - %d", number];
-    
+    return [[[NSString alloc] initWithUTF8String:(const char*)phrase] stringByReplacingOccurrencesOfString:@"&amp;" withString:@"'"];
 }
+
 - (void) showNextText
 {
     [UIView animateWithDuration:1.0 animations:^{
@@ -118,8 +116,6 @@ static int number = 0;
         frame.size.width = 0;
         cover.frame = frame;
     }];
-    
-    
 }
 
 -(BOOL)canBecomeFirstResponder {
@@ -209,7 +205,6 @@ static int number = 0;
 - (void) addMouthLayer
 {
     [self.view addSubview:[[MouthView alloc] initWithFrame:CGRectMake(100,CGRectGetMidY(self.view.frame)+60, 120, 150)]];
-
 }
 
 - (void)didReceiveMemoryWarning
